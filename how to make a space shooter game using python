@@ -1,0 +1,65 @@
+import pygame
+
+
+from pygame import mixer
+
+pygame.init()
+x = 200
+y = 200
+background = pygame.image.load("backgroung.png")
+
+jet = pygame.image.load("jet.png")
+
+enemy = pygame.image.load("enemy.png")
+width = 20
+height = 20
+
+vel = 10
+
+screen = pygame.display.set_mode((500, 700))
+
+pygame.display.set_caption('jet shooter')
+BLACK = (0, 0, 0)
+WHITE = (0, 0, 0)
+RED = (225, 0, 13)
+screen.fill(BLACK)
+pygame.display.flip()
+
+mixer.music.load("space-chillout-14194.mp3")
+mixer.music.play(-1)
+
+font = pygame.font.Font('freesansbold.ttf', 32)
+text = font.render('jet shooter', True, RED)
+
+text_Rect = text.get_rect()
+text_Rect = (x // 2, y // 400)
+
+is_running = True
+
+
+while is_running:
+
+    pygame.time.delay(10)
+
+    keys = pygame.key.get_pressed()
+    if keys[pygame.K_LEFT] and x>0:
+        x -= vel
+
+    if keys[pygame.K_RIGHT] and x<500-width:
+        x += vel
+
+    if keys[pygame.K_UP] and y>0:
+        y -= vel
+    if keys[pygame.K_DOWN] and y<500-height:
+        y += vel
+
+    screen.blit(background, (0, 0))
+    screen.blit(text, text_Rect)
+    screen.blit(jet, (x, y))
+    screen.blit(enemy, (200, 50))
+
+    for event in pygame.event.get():
+        if event.type == pygame.QUIT:
+            is_running = False
+        pygame.display.update()
+
